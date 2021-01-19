@@ -58,7 +58,7 @@
             "App\\": "app/"
         },
         "files": [
-            "App/Helpers.php"
+            "app/Helper.php"
         ]
     },
     "minimum-stability": "dev",
