@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 	@include('frontend.layouts.head')	
 </head>
 <body class="js">

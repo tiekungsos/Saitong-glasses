@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   @include('backend.layouts.head')
 
 </head>
