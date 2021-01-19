@@ -49,7 +49,7 @@
             "database/factories"
         ],
         "files": [
-            "app/Helpers.php"
+            "App/Helpers.php"
         ]
     },
     "autoload-dev": {
@@ -58,7 +58,7 @@
             "App\\": "app/"
         },
         "files": [
-            "app/Helpers.php"
+            "App/Helpers.php"
         ]
     },
     "minimum-stability": "dev",
