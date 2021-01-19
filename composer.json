@@ -49,7 +49,7 @@
             "database/factories"
         ],
         "files": [
-            "App/Helpers.php"
+            "App/Helper.php"
         ]
     },
     "autoload-dev": {
