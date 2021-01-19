@@ -8,7 +8,7 @@ use App\Models\Wishlist;
 use App\Models\Shipping;
 use App\Models\Cart;
 
-namespace App\Http;
+namespace App;
 
 // use Auth;
 class Helper {

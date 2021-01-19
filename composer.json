@@ -47,6 +47,9 @@
         "classmap": [
             "database/seeds",
             "database/factories"
+        ],
+        "files": [
+            "app/Helpers.php"
         ]
     },
     "autoload-dev": {
@@ -55,7 +58,7 @@
             "App\\": "app/"
         },
         "files": [
-            "app/Http/Helpers.php"
+            "app/Helpers.php"
         ]
     },
     "minimum-stability": "dev",
