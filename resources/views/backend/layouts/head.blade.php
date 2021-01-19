@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <?php header('Access-Control-Allow-Origin: *'); ?>
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title> DASHBOARD</title>

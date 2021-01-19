@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
+<?php header('Access-Control-Allow-Origin: *'); ?>
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 	@include('frontend.layouts.head')	
 </head>
