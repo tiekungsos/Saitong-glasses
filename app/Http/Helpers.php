@@ -8,8 +8,6 @@ use App\Models\Wishlist;
 use App\Models\Shipping;
 use App\Models\Cart;
 
-namespace App;
-
 // use Auth;
 class Helper {
     public static function messageList()
