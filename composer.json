@@ -21,8 +21,7 @@
         "spatie/laravel-newsletter": "^4.8",
         "srmklive/paypal": "~1.0",
         "unisharp/laravel-filemanager": "^2.1",
-        "ext-gd": "*",
-        "ext-imagick": "*"
+        "ext-gd": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
