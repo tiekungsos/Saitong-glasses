@@ -193,6 +193,7 @@
                                             <li class="{{Request::path()=='about-us' ? 'active' : ''}}"><a href="{{route('about-us')}}">เกี่ยวกับฉัน</a></li>
                                             <li class="@if(Request::path()=='product-grids'||Request::path()=='product-lists')  active  @endif"><a href="{{route('product-grids')}}">สินค้า</a><span class="new">New</span></li>												
                                                 {{Helper::getHeaderCategory()}}								
+                                            <li class="{{Request::path()=='try-glasses' ? 'active' : ''}}"><a href="{{route('try-glasses')}}">ระบบจำลองแว่นตา</a></li>
                                             <li class="{{Request::path()=='contact' ? 'active' : ''}}"><a href="{{route('contact')}}">ติดต่อสอบถาม</a></li>
                                         </ul>
                                     </div>

@@ -35,7 +35,7 @@
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>ชื่อ<span>*</span></label>
-                                            <input type="text" name="first_name" placeholder="" value="{{old('first_name')}}" value="{{old('first_name')}}">
+                                            <input type="text" name="first_name" placeholder="" value="{{old('first_name')}}" value="{{old('first_name')}}" required>
                                             @error('first_name')
                                                 <span class='text-danger'>{{$message}}</span>
                                             @enderror
@@ -44,7 +44,7 @@
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>นามสกุล<span>*</span></label>
-                                            <input type="text" name="last_name" placeholder="" value="{{old('lat_name')}}">
+                                            <input type="text" name="last_name" placeholder="" value="{{old('lat_name')}}" required>
                                             @error('last_name')
                                                 <span class='text-danger'>{{$message}}</span>
                                             @enderror
@@ -53,7 +53,7 @@
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>อีเมลล์<span>*</span></label>
-                                            <input type="email" name="email" placeholder="" value="{{old('email')}}">
+                                            <input type="email" name="email" placeholder="" value="{{old('email')}}" required>
                                             @error('email')
                                                 <span class='text-danger'>{{$message}}</span>
                                             @enderror
@@ -62,7 +62,7 @@
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>เบอร์โทรติดต่อ <span>*</span></label>
-                                            <input type="number" name="phone" placeholder="" required value="{{old('phone')}}">
+                                            <input type="number" name="phone" placeholder="" required value="{{old('phone')}}" required>
                                             @error('phone')
                                                 <span class='text-danger'>{{$message}}</span>
                                             @enderror
@@ -71,7 +71,7 @@
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>ประเทศ<span>*</span></label>
-                                            <select name="country" id="country">
+                                            <select name="country" id="country" required>
                                                 <option value="AF">Afghanistan</option>
                                                 <option value="AX">Åland Islands</option>
                                                 <option value="AL">Albania</option>
@@ -351,11 +351,11 @@
                                     <div class="content">
                                         <ul>
 										    <li class="order_subtotal" data-price="{{Helper::totalCartPrice()}}">รวมการสั่งซื้อ<span>฿{{number_format(Helper::totalCartPrice(),2)}}</span></li>
-                                            <!-- <li class="shipping">
-                                                Shipping Cost
+                                            <li class="shipping">
+                                                เลือกจังหวัดที่จัดส่ง
                                                 @if(count(Helper::shipping())>0 && Helper::cartCount()>0)
-                                                    <select name="shipping" class="nice-select">
-                                                        <option value="">Select your address</option>
+                                                    <select name="shipping" class="nice-select" required>
+                                                        <option value="">เลือกจังหวัดจัดส่ง</option>
                                                         @foreach(Helper::shipping() as $shipping)
                                                         <option value="{{$shipping->id}}" class="shippingOption" data-price="{{$shipping->price}}">{{$shipping->type}}: ${{$shipping->price}}</option>
                                                         @endforeach
@@ -363,7 +363,7 @@
                                                 @else 
                                                     <span>Free</span>
                                                 @endif
-                                            </li> -->
+                                            </li>
                                             
                                             @if(session('coupon'))
                                             <li class="coupon_price" data-price="{{session('coupon')['value']}}">ส่วนลด<span>฿{{number_format(session('coupon')['value'],2)}}</span></li>
@@ -390,7 +390,7 @@
                                         <div class="checkbox">
                                             {{-- <label class="checkbox-inline" for="1"><input name="updates" id="1" type="checkbox"> Check Payments</label> --}}
                                             <form-group>
-                                                <input name="payment_method"  type="radio" value="cod"> <label>เก็บเงินปลายทาง</label><br>
+                                                <input name="payment_method"  type="radio" value="cod" required> <label>เก็บเงินปลายทาง</label><br>
                                                 <!-- <input name="payment_method"  type="radio" value="paypal"> <label> PayPal</label>  -->
                                             </form-group>
                                             
