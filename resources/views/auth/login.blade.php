@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<?php header('Access-Control-Allow-Origin: *'); ?>
   <title> Login Page</title>
   @include('backend.layouts.head')
 

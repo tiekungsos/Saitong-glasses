@@ -44,6 +44,12 @@ class FrontendController extends Controller
         return view('frontend.pages.about-us');
     }
 
+    public function tryGlasses(){
+        $products=Product::select('title','slug','photo','price')->where('status','active')->orderBy('id','DESC')->get();
+
+        return view('frontend.pages.try-glasses')->with('productList',$products);;
+    }
+
     public function contact(){
         return view('frontend.pages.contact');
     }

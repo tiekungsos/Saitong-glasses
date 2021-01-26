@@ -58,7 +58,7 @@ class LoginController extends Controller
         // dd($users);
         if($users){
             Auth::login($users);
-            return redirect('/')->with('success','You are login from '.$provider);
+            return redirect('/')->with('success','คุณได้เข้าสู่ระบบ '.$provider);
         }else{
             $user = User::create([
                 'name'          => $userSocial->getName(),

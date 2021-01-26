@@ -2,7 +2,8 @@
 <html lang="en">
 
 <head>
-
+<?php header('Access-Control-Allow-Origin: *'); ?>
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   @include('backend.layouts.head')
 
 </head>

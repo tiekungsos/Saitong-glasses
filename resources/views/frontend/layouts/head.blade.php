@@ -2,6 +2,7 @@
 @yield('meta')
 <!-- Title Tag  -->
 <title>@yield('title')</title>
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 <!-- Favicon -->
 <link rel="icon" type="image/png" href="images/favicon.png">
 <!-- Web Font -->
