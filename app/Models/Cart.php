@@ -11,9 +11,9 @@ class Cart extends Model
     // public function product(){
     //     return $this->hasOne('App\Models\Product','id','product_id');
     // }
-    // public static function getAllProductFromCart(){
-    //     return Cart::with('product')->where('user_id',auth()->user()->id)->get();
-    // }
+    public static function getAllProductFromCart($id){
+        return Cart::with('product')->find($id);
+    }
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id');

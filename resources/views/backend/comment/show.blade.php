@@ -29,8 +29,8 @@
             <td>{{$order->first_name}} {{$order->last_name}}</td>
             <td>{{$order->email}}</td>
             <td>{{$order->quantity}}</td>
-            <td>${{number_format($order->delivery_charge,2)}}</td>
-            <td>${{number_format($order->total_amount,2)}}</td>
+            <td>฿{{number_format($order->delivery_charge,2)}}</td>
+            <td>฿{{number_format($order->total_amount,2)}}</td>
             <td>
                 @if($order->status=='new')
                   <span class="badge badge-primary">{{$order->status}}</span>
@@ -38,6 +38,10 @@
                   <span class="badge badge-warning">{{$order->status}}</span>
                 @elseif($order->status=='delivered')
                   <span class="badge badge-success">{{$order->status}}</span>
+                @elseif($order->status=='receive')
+                  <span class="badge badge-success">{{$order->status}}</span>
+                @elseif($order->status=='no_receiver')
+                  <span class="badge badge-danger">{{$order->status}}</span>
                 @else
                   <span class="badge badge-danger">{{$order->status}}</span>
                 @endif

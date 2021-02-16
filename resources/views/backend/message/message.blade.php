@@ -72,8 +72,8 @@
           <img class="rounded-circle" src="${e.message.photo}" alt="${e.message.name}">
         </div>
         <div class="font-weight-bold">
-          <div class="text-truncate">${e.message.subject}</div>
-          <div class="small text-gray-500">${e.message.name} · ${e.message.date}</div>
+          <div class="text-truncate">฿{e.message.subject}</div>
+          <div class="small text-gray-500">฿{e.message.name} · ${e.message.date}</div>
         </div>
       </a>
       `;

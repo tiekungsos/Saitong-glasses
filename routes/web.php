@@ -128,6 +128,9 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
 
     // Order
     Route::resource('/order','OrderController');
+    Route::post('/order/uploadSlip/{id}',"OrderController@addSlipOrder")->name('user.order.slip.upload');
+
+
     // Shipping
     Route::resource('/shipping','ShippingController');
     // Coupon
@@ -164,6 +167,8 @@ Route::group(['prefix'=>'/user','middleware'=>['user']],function(){
     Route::get('/order',"HomeController@orderIndex")->name('user.order.index');
     Route::get('/order/show/{id}',"HomeController@orderShow")->name('user.order.show');
     Route::delete('/order/delete/{id}','HomeController@userOrderDelete')->name('user.order.delete');
+    Route::post('/order/uploadSlip/{id}',"HomeController@addSlipOrder")->name('user.order.slip.upload');
+
     // Product Review
     Route::get('/user-review','HomeController@productReviewIndex')->name('user.productreview.index');
     Route::delete('/user-review/delete/{id}','HomeController@productReviewDelete')->name('user.productreview.delete');

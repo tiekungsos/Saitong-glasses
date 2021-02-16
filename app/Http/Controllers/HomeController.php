@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\Order;
+use App\Models\Cart;
 use App\Models\ProductReview;
 use App\Models\PostComment;
 use App\Rules\MatchOldPassword;
 use Hash;
+use App\Models\File;
 
 class HomeController extends Controller
 {
@@ -58,11 +60,25 @@ class HomeController extends Controller
         $orders=Order::orderBy('id','DESC')->where('user_id',auth()->user()->id)->paginate(10);
         return view('user.order.index')->with('orders',$orders);
     }
+
+
+
+    public function addSlipOrder(Request $req, $id)
+    {
+        
+        $order=Order::find($id);
+        $order->slip_order = $req->file;
+        $order->save();
+  
+        request()->session()->flash('success','Order Successfully Upload Slip');
+        return redirect()->back();
+    }
+
     public function userOrderDelete($id)
     {
         $order=Order::find($id);
         if($order){
-           if($order->status=="process" || $order->status=='delivered' || $order->status=='cancel'){
+           if($order->status=="process" || $order->status=='delivered' || $order->status=='receive' || $order->status=='no_receiver' || $order->status=='cancel'){
                 return redirect()->back()->with('error','You can not delete this order now');
            }
            else{
@@ -84,9 +100,21 @@ class HomeController extends Controller
 
     public function orderShow($id)
     {
-        $order=Order::find($id);
+        $order=Order::getAllOrder($id);
+        $product = [];
+
+        $cart = $order->cart_info;
+
+        foreach ($cart as $key => $value) {
+            $cartData = Cart::getAllProductFromCart($value->id);
+            $product[] = $cartData;
+        }
+
         // return $order;
-        return view('user.order.show')->with('order',$order);
+        return view('user.order.show',[
+            'order' => $order,
+            'product' => $product
+        ]);
     }
     // Product Review
     public function productReviewIndex(){
