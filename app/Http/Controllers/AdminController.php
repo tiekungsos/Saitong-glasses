@@ -9,6 +9,8 @@ use App\Rules\MatchOldPassword;
 use Hash;
 use Carbon\Carbon;
 use Spatie\Activitylog\Models\Activity;
+use App\Models\Order;
+use App\Models\Cart;
 class AdminController extends Controller
 {
     public function index(){
@@ -22,9 +24,75 @@ class AdminController extends Controller
      {
        $array[++$key] = [$value->day_name, $value->count];
      }
+
+     $order = $this->orderAll();
     //  return $data;
-     return view('backend.index')->with('users', json_encode($array));
+     return view('backend.index',[
+        'users' => json_encode($array),
+        'orderAll' => json_encode($order)
+    ]);
     }
+
+     // Income chart
+     public function orderAll(){
+        $year=\Carbon\Carbon::now()->year;
+        // dd($year);
+        $items=Order::with(['cart_info'])->whereYear('created_at',$year)->where('status','delivered')->get()
+            ->groupBy(function($d){
+                return \Carbon\Carbon::parse($d->created_at)->format('m');
+            });
+            // dd($items);
+        $result=[];
+        foreach($items as $month=>$item_collections){
+         
+            foreach($item_collections as $item){
+                // dd($item);
+
+
+                $cart = $item->cart_info;
+                $cost = 0;
+                // dd($cart->toArray());
+                if(!empty($cart->toArray())) {
+                    $product = [];
+                
+                    foreach ($cart as $key => $value) {
+                        $cartData = Cart::getAllProductFromCart($value->id);
+                        $cost += $cartData->product->cost;
+                    }
+
+                    // dd($cost);
+                }
+             
+
+
+
+                $amount=$item->cart_info->sum('amount');
+
+
+                // dd($amount);
+                $m=intval($month);
+                // return $m;
+                if(isset($result[$m])) {
+                    $result[$m]['sales'] += $amount;
+                    $result[$m]['cost'] += $cost;
+                    $result[$m]['profit'] += ($amount - $cost);
+
+                } else {
+                    $result[$m]['sales'] = $amount;
+                    $result[$m]['cost'] = $cost;
+                    $result[$m]['profit'] = ($amount - $cost);
+                }
+                
+            }
+        }
+        $data=[];
+        for($i=1; $i <=12; $i++){
+            $monthName=date('F', mktime(0,0,0,$i,1));
+            $data[$monthName] = (!empty($result[$i]))? $result[$i] : ['sales' => 0,'cost' => 0,'profit' => 0];
+        }
+        return $data;
+    }
+
 
     public function profile(){
         $profile=Auth()->user();

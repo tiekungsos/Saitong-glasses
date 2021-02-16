@@ -118,6 +118,24 @@
       </div>
     </div>
     <!-- Content Row -->
+
+
+     <!-- Area Chart -->
+     <div class="col-xl-12 col-lg-12">
+      <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">Report Order</h6>
+          
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+          <div class="chart-area" style="height: 100%">
+            <div id="lineChart" style="height: 500px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
     
   </div>
 @endsection
@@ -127,9 +145,10 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 {{-- pie chart --}}
 <script type="text/javascript">
-  var analytics = <?php echo $users; ?>
+  var analytics = <?php echo $users; ?>,
+   OrderAll = <?php echo $orderAll; ?>
 
-  google.charts.load('current', {'packages':['corechart']});
+  google.charts.load('current', {'packages':['corechart','bar']});
   google.charts.setOnLoadCallback(drawChart);
 
   function drawChart()
@@ -141,6 +160,41 @@
       var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
       chart.draw(data, options);
   }
+
+  google.charts.load('current', {'packages':['bar']});
+  google.charts.setOnLoadCallback(drawChart2);
+  function drawChart2() {
+    var dataChart = [
+      ['Month', 'Sales', 'Cost', 'Profit']
+    ];
+
+    const data_keys = Object.keys(OrderAll);
+    const data_values = Object.values(OrderAll);
+
+      data_values.forEach((data,key) => {
+        var dataIn = [data_keys[key],data.sales,data.cost,data.profit];
+        dataChart.push(dataIn)
+      });
+
+    var data = google.visualization.arrayToDataTable(dataChart);
+
+        var options = {
+          chart: {
+            title: 'Order Report',
+            subtitle: 'Sales, Cost, and Profit In This Year',
+          },
+          bars: 'vertical ' // Required for Material Bar Charts.
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('lineChart'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+
+
+  
+
+
 </script>
   {{-- line chart --}}
   <script type="text/javascript">
@@ -181,12 +235,14 @@
               .then(function (response) {
                 const data_keys = Object.keys(response.data);
                 const data_values = Object.values(response.data);
+
+                console.log(response.data);
                 var myLineChart = new Chart(ctx, {
                   type: 'line',
                   data: {
                     labels: data_keys, // ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                     datasets: [{
-                      label: "Earnings",
+                      label: ["Cost","Earnings","Profit"],
                       lineTension: 0.3,
                       backgroundColor: "rgba(78, 115, 223, 0.05)",
                       borderColor: "rgba(78, 115, 223, 1)",
@@ -261,8 +317,14 @@
                       caretPadding: 10,
                       callbacks: {
                         label: function(tooltipItem, chart) {
-                          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                          return datasetLabel + ': ฿' + number_format(tooltipItem.yLabel);
+                          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label[1] || '';
+                          var datasetLabelCost = chart.datasets[tooltipItem.datasetIndex].label[0] || '';
+                          var datasetLabelProfit = chart.datasets[tooltipItem.datasetIndex].label[2] || '';
+
+
+                          datasetLabel = datasetLabel + ': ฿' + number_format(tooltipItem.yLabel) + ' | ' + datasetLabelCost + ': ฿' + number_format(tooltipItem.yLabel) + ' | ' + datasetLabelProfit + ': ฿' + number_format(tooltipItem.yLabel);
+
+                          return datasetLabel
                         }
                       }
                     }

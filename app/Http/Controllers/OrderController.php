@@ -314,7 +314,12 @@ class OrderController extends Controller
                 // dd($amount);
                 $m=intval($month);
                 // return $m;
-                isset($result[$m]) ? $result[$m] += $amount :$result[$m]=$amount;
+                if(isset($result[$m])) {
+                    $result[$m] += $amount;
+                } else {
+                    $result[$m] = $amount;
+                }
+                
             }
         }
         $data=[];
