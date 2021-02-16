@@ -37,7 +37,7 @@ class AdminController extends Controller
      public function orderAll(){
         $year=\Carbon\Carbon::now()->year;
         // dd($year);
-        $items=Order::with(['cart_info'])->whereYear('created_at',$year)->where('status','delivered')->get()
+        $items=Order::with(['cart_info'])->whereYear('created_at',$year)->where('status','delivered')->orWhere('status', 'receive')->orWhere('status', 'no_receiver')->get()
             ->groupBy(function($d){
                 return \Carbon\Carbon::parse($d->created_at)->format('m');
             });
