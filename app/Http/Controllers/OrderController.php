@@ -151,17 +151,38 @@ class OrderController extends Controller
         return redirect()->route('home');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // /**
+    //  * Display the specified resource.
+    //  *
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function show($id)
+    // {
+    //     $order=Order::find($id);
+    //     // return $order;
+    //     return view('backend.order.show')->with('order',$order);
+    // }
+
+
+
     public function show($id)
     {
-        $order=Order::find($id);
+        $order=Order::getAllOrder($id);
+        $product = [];
+
+        $cart = $order->cart_info;
+
+        foreach ($cart as $key => $value) {
+            $cartData = Cart::getAllProductFromCart($value->id);
+            $product[] = $cartData;
+        }
+
         // return $order;
-        return view('backend.order.show')->with('order',$order);
+        return view('backend.order.show',[
+            'order' => $order,
+            'product' => $product
+        ]);
     }
 
     /**
