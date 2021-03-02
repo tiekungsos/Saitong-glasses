@@ -41,7 +41,7 @@
                                 @foreach ($shipping_charge as $data) $
                                     {{ number_format($data, 2) }} @endforeach
                             </td>
-                            <td>${{ number_format($order->total_amount, 2) }}</td>
+                            <td>฿{{ number_format($order->total_amount, 2) }}</td>
                             <td>
                                 @if ($order->status == 'new')
                                     <span class="badge badge-primary">{{ $order->status }}</span>
@@ -103,11 +103,11 @@
                                                     ->pluck('price');
                                             @endphp
                                             <td>Shipping Charge</td>
-                                            <td> : $ {{ number_format($shipping_charge[0], 2) }}</td>
+                                            <td> : ฿{{ number_format($shipping_charge[0], 2) }}</td>
                                         </tr>
                                         <tr>
                                             <td>Total Amount</td>
-                                            <td> : $ {{ number_format($order->total_amount, 2) }}</td>
+                                            <td> : ฿{{ number_format($order->total_amount, 2) }}</td>
                                         </tr>
                                         <tr>
                                             <td>Update Status Time</td>

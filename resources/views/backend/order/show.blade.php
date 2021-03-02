@@ -92,15 +92,15 @@
                           $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
                       @endphp
                         <td>Shipping Charge</td>
-                        <td> : $ {{number_format($shipping_charge[0],2)}}</td>
+                        <td> : ฿{{number_format($shipping_charge[0],2)}}</td>
                     </tr>
                     <tr>
                       <td>Coupon</td>
-                      <td> : $ {{number_format($order->coupon,2)}}</td>
+                      <td> : ฿{{number_format($order->coupon,2)}}</td>
                     </tr>
                     <tr>
                         <td>Total Amount</td>
-                        <td> : $ {{number_format($order->total_amount,2)}}</td>
+                        <td> : ฿{{number_format($order->total_amount,2)}}</td>
                     </tr>
                     <tr>
                         <td>Payment Method</td>
@@ -183,6 +183,52 @@
         </div>
       </div>
     </section>
+
+    <section class="confirmation_part section_padding" style="padding-top: 30px">
+                    <div class="order_boxes">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="shipping-info">
+                                    <h4 class="text-center pb-4">PRODUCT DETAIL</h4>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Number</th>
+                                                <th>photo</th>
+                                                <th>Product Name</th>
+                                                <th>SKU</th>
+                                                <th>QTY</th>
+                                                <th>Price</th>
+                                                <th>Subtotal</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($product as $productData)
+                                                {{-- {{dd($productData)}} --}}
+                                                <tr>
+                                                    <td>
+                                                        {{ $productData->product->id }}
+                                                    </td>
+                                                    <td>
+                                                        <img src="{{ $productData->product->photo }}" class="img-fluid"
+                                                            width="100px" alt="">
+                                                    </td>
+                                                    <td>{{ $productData->product->title }}</td>
+                                                    <td>{{ $productData->product->slug }}</td>
+                                                    <td> {{ $productData->quantity }}</td>
+                                                    <td>{{ $productData->price }}</td>
+                                                    <td> {{ $productData->amount }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
     @endif
 
   </div>
