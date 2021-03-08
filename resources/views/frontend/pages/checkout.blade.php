@@ -357,7 +357,7 @@
                                                     <select name="shipping" class="nice-select" required>
                                                         <option value="">เลือกจังหวัดจัดส่ง</option>
                                                         @foreach(Helper::shipping() as $shipping)
-                                                        <option value="{{$shipping->id}}" class="shippingOption" data-price="{{$shipping->price}}">{{$shipping->type}}: ${{$shipping->price}}</option>
+                                                        <option value="{{$shipping->id}}" class="shippingOption" data-price="{{$shipping->price}}">{{$shipping->type}}: ฿{{$shipping->price}}</option>
                                                         @endforeach
                                                     </select>
                                                 @else 

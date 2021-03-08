@@ -18,6 +18,7 @@
             <th>Quantity</th>
             <th>Charge</th>
             <th>Total Amount</th>
+            <th>Update Status Time</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
@@ -29,19 +30,24 @@
             <td>{{$order->first_name}} {{$order->last_name}}</td>
             <td>{{$order->email}}</td>
             <td>{{$order->quantity}}</td>
-            <td>${{number_format($order->delivery_charge,2)}}</td>
-            <td>${{number_format($order->total_amount,2)}}</td>
+            <td>฿{{number_format($order->delivery_charge,2)}}</td>
+            <td>฿{{number_format($order->total_amount,2)}}</td>
             <td>
-                @if($order->status=='new')
-                  <span class="badge badge-primary">{{$order->status}}</span>
-                @elseif($order->status=='process')
-                  <span class="badge badge-warning">{{$order->status}}</span>
-                @elseif($order->status=='delivered')
-                  <span class="badge badge-success">{{$order->status}}</span>
-                @else
-                  <span class="badge badge-danger">{{$order->status}}</span>
-                @endif
-            </td>
+              @if($order->status=='new')
+                <span class="badge badge-primary">{{$order->status}}</span>
+              @elseif($order->status=='process')
+                <span class="badge badge-warning">{{$order->status}}</span>
+              @elseif($order->status=='delivered')
+                <span class="badge badge-success">{{$order->status}}</span>
+              @elseif($order->status=='receive')
+                <span class="badge badge-success">{{$order->status}}</span>
+              @elseif($order->status=='no_receiver')
+                <span class="badge badge-danger">{{$order->status}}</span>
+              @else
+                <span class="badge badge-danger">{{$order->status}}</span>
+              @endif
+          </td>
+            <td>{{ $order->updated_at }}</td>
             <td>
                 <a href="{{route('order.edit',$order->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
                 <form method="POST" action="{{route('order.destroy',[$order->id])}}">
@@ -80,11 +86,11 @@
                     </tr>
                     <tr>
                         <td>Shipping Charge</td>
-                        <td> : $ {{number_format($order->delivery_charge,2)}}</td>
+                        <td> : ฿{{number_format($order->delivery_charge,2)}}</td>
                     </tr>
                     <tr>
                         <td>Total Amount</td>
-                        <td> : $ {{number_format($order->total_amount,2)}}</td>
+                        <td> : ฿{{number_format($order->total_amount,2)}}</td>
                     </tr>
                     <tr>
                         <td>Payment Method</td>

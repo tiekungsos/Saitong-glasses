@@ -16,6 +16,8 @@
           <option value="new" {{(($order->status=='new')? 'selected' : '')}}>New</option>
           <option value="process" {{(($order->status=='process')? 'selected' : '')}}>process</option>
           <option value="delivered" {{(($order->status=='delivered')? 'selected' : '')}}>Delivered</option>
+          <option value="receive" {{(($order->status=='receive')? 'selected' : '')}}>Receive</option>
+          <option value="no_receiver" {{(($order->status=='no_receiver')? 'selected' : '')}}>No receiver</option>
           <option value="cancel" {{(($order->status=='cancel')? 'selected' : '')}}>Cancel</option>
         </select>
       </div>

@@ -151,17 +151,38 @@ class OrderController extends Controller
         return redirect()->route('home');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // /**
+    //  * Display the specified resource.
+    //  *
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function show($id)
+    // {
+    //     $order=Order::find($id);
+    //     // return $order;
+    //     return view('backend.order.show')->with('order',$order);
+    // }
+
+
+
     public function show($id)
     {
-        $order=Order::find($id);
+        $order=Order::getAllOrder($id);
+        $product = [];
+
+        $cart = $order->cart_info;
+
+        foreach ($cart as $key => $value) {
+            $cartData = Cart::getAllProductFromCart($value->id);
+            $product[] = $cartData;
+        }
+
         // return $order;
-        return view('backend.order.show')->with('order',$order);
+        return view('backend.order.show',[
+            'order' => $order,
+            'product' => $product
+        ]);
     }
 
     /**
@@ -187,7 +208,7 @@ class OrderController extends Controller
     {
         $order=Order::find($id);
         $this->validate($request,[
-            'status'=>'required|in:new,process,delivered,cancel'
+            'status'=>'required|in:new,process,delivered,receive,no_receiver,cancel'
         ]);
         $data=$request->all();
         // return $request->status;
@@ -207,6 +228,18 @@ class OrderController extends Controller
             request()->session()->flash('error','Error while updating order');
         }
         return redirect()->route('order.index');
+    }
+
+
+    public function addSlipOrder(Request $req, $id)
+    {
+        
+        $order=Order::find($id);
+        $order->slip_order = $req->file;
+        $order->save();
+  
+        request()->session()->flash('success','Order Successfully Upload Slip');
+        return redirect()->back();
     }
 
     /**
@@ -257,6 +290,14 @@ class OrderController extends Controller
                 return redirect()->route('home');
     
             }
+            elseif($order->status=="receive") {
+                request()->session()->flash('success','Your order is successfully Receive.');
+                return redirect()->route('home');
+            }
+            elseif($order->status=="no_receiver") {
+                request()->session()->flash('success','Your order is No Receiver Please Contact store.');
+                return redirect()->route('home');
+            }
             else{
                 request()->session()->flash('error','Your order canceled. please try again');
                 return redirect()->route('home');
@@ -294,7 +335,12 @@ class OrderController extends Controller
                 // dd($amount);
                 $m=intval($month);
                 // return $m;
-                isset($result[$m]) ? $result[$m] += $amount :$result[$m]=$amount;
+                if(isset($result[$m])) {
+                    $result[$m] += $amount;
+                } else {
+                    $result[$m] = $amount;
+                }
+                
             }
         }
         $data=[];

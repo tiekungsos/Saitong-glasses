@@ -22,6 +22,7 @@
             <th>Charge</th>
             <th>Total Amount</th>
             <th>Status</th>
+            <th>Update Status Time</th>
             <th>Action</th>
         </tr>
       </thead>
@@ -32,19 +33,24 @@
             <td>{{$order->first_name}} {{$order->last_name}}</td>
             <td>{{$order->email}}</td>
             <td>{{$order->quantity}}</td>
-            <td>@foreach($shipping_charge as $data) $ {{number_format($data,2)}} @endforeach</td>
-            <td>${{number_format($order->total_amount,2)}}</td>
+            <td>@foreach($shipping_charge as $data) ฿ {{number_format($data,2)}} @endforeach</td>
+            <td>฿{{number_format($order->total_amount,2)}}</td>
             <td>
-                @if($order->status=='new')
-                  <span class="badge badge-primary">{{$order->status}}</span>
-                @elseif($order->status=='process')
-                  <span class="badge badge-warning">{{$order->status}}</span>
-                @elseif($order->status=='delivered')
-                  <span class="badge badge-success">{{$order->status}}</span>
-                @else
-                  <span class="badge badge-danger">{{$order->status}}</span>
-                @endif
-            </td>
+              @if($order->status=='new')
+                <span class="badge badge-primary">{{$order->status}}</span>
+              @elseif($order->status=='process')
+                <span class="badge badge-warning">{{$order->status}}</span>
+              @elseif($order->status=='delivered')
+                <span class="badge badge-success">{{$order->status}}</span>
+              @elseif($order->status=='receive')
+                <span class="badge badge-success">{{$order->status}}</span>
+              @elseif($order->status=='no_receiver')
+                <span class="badge badge-danger">{{$order->status}}</span>
+              @else
+                <span class="badge badge-danger">{{$order->status}}</span>
+              @endif
+          </td>
+            <td>{{ $order->updated_at }}</td>
             <td>
                 <a href="{{route('order.edit',$order->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
                 <form method="POST" action="{{route('order.destroy',[$order->id])}}">
@@ -86,15 +92,15 @@
                           $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
                       @endphp
                         <td>Shipping Charge</td>
-                        <td> : $ {{number_format($shipping_charge[0],2)}}</td>
+                        <td> : ฿{{number_format($shipping_charge[0],2)}}</td>
                     </tr>
                     <tr>
                       <td>Coupon</td>
-                      <td> : $ {{number_format($order->coupon,2)}}</td>
+                      <td> : ฿{{number_format($order->coupon,2)}}</td>
                     </tr>
                     <tr>
                         <td>Total Amount</td>
-                        <td> : $ {{number_format($order->total_amount,2)}}</td>
+                        <td> : ฿{{number_format($order->total_amount,2)}}</td>
                     </tr>
                     <tr>
                         <td>Payment Method</td>
@@ -104,6 +110,41 @@
                         <td>Payment Status</td>
                         <td> : {{$order->payment_status}}</td>
                     </tr>
+                    @if (!$order->slip_order)
+                    <tr>
+                        <td>Upload Slip Payment</td>
+                        <td>
+                            <form method="POST" action="/user/order/uploadSlip/{{ $order->id }}"
+                                enctype="multipart/form-data"
+                                class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                @csrf
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <a id="lfm" data-input="thumbnail" data-preview="holder"
+                                                class="btn btn-primary">
+                                                <i class="fa fa-picture-o"></i> Choose
+                                            </a>
+                                        </span>
+                                        <input id="thumbnail" class="form-control" type="text"
+                                            name="file" value="{{ $order->slip_order }}">
+
+                                    </div>
+                                    @error('slip_order')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <button type="submit" class="btn btn-success btn-sm"
+                                    style="margin-top: 20px">Upload</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @else
+                    <tr>
+                        <td>Slip Payment</td>
+                        <td><a href="{{$order->slip_order}}" target="_blank"><img src="{{$order->slip_order}}" class="img-fluid" width="200px" alt=""></a> </td>
+                    @endif
               </table>
             </div>
           </div>
@@ -142,6 +183,52 @@
         </div>
       </div>
     </section>
+
+    <section class="confirmation_part section_padding" style="padding-top: 30px">
+                    <div class="order_boxes">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="shipping-info">
+                                    <h4 class="text-center pb-4">PRODUCT DETAIL</h4>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Number</th>
+                                                <th>photo</th>
+                                                <th>Product Name</th>
+                                                <th>SKU</th>
+                                                <th>QTY</th>
+                                                <th>Price</th>
+                                                <th>Subtotal</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($product as $productData)
+                                                {{-- {{dd($productData)}} --}}
+                                                <tr>
+                                                    <td>
+                                                        {{ $productData->product->id }}
+                                                    </td>
+                                                    <td>
+                                                        <img src="{{ $productData->product->photo }}" class="img-fluid"
+                                                            width="100px" alt="">
+                                                    </td>
+                                                    <td>{{ $productData->product->title }}</td>
+                                                    <td>{{ $productData->product->slug }}</td>
+                                                    <td> {{ $productData->quantity }}</td>
+                                                    <td>{{ $productData->price }}</td>
+                                                    <td> {{ $productData->amount }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
     @endif
 
   </div>
