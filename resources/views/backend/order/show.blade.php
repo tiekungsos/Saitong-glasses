@@ -114,7 +114,7 @@
                     <tr>
                         <td>Upload Slip Payment</td>
                         <td>
-                            <form method="POST" action="/user/order/uploadSlip/{{ $order->id }}"
+                            <form method="POST" action="/admin/order/uploadSlip/{{ $order->id }}"
                                 enctype="multipart/form-data"
                                 class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                                 @csrf
@@ -246,4 +246,12 @@
     }
 
 </style>
+@endpush
+
+@push('scripts')
+    <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
+    <script>
+        $('#lfm').filemanager('image');
+
+    </script>
 @endpush

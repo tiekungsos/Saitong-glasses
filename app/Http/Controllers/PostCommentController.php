@@ -48,7 +48,7 @@ class PostCommentController extends Controller
         $data['status']='active';
         // return $data;
         $status=PostComment::create($data);
-        $user=User::where('role','admin')->get();
+        $user=User::where('role','admin')->orWhere('role','staff')->get();
         $details=[
             'title'=>"New Comment created",
             'actionURL'=>route('blog.detail',$post_info->slug),

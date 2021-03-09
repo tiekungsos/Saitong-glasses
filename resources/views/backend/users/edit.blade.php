@@ -56,8 +56,9 @@
             <select name="role" class="form-control">
                 <option value="">-----Select Role-----</option>
                 @foreach($roles as $role)
-                    <option value="{{$role->role}}" {{(($role->role=='admin') ? 'selected' : '')}}>Admin</option>
-                    <option value="{{$role->role}}" {{(($role->role=='user') ? 'selected' : '')}}>User</option>
+                    <option value="admin" {{(($role->role=='admin') ? 'selected' : '')}}>Admin</option>
+                    <option value="user" {{(($role->role=='user') ? 'selected' : '')}}>User</option>
+                    <option value="staff" {{(($role->role=='staff') ? 'selected' : '')}}>Staff</option>
                 @endforeach
             </select>
           @error('role')

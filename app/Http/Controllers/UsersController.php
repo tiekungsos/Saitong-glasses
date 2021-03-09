@@ -41,7 +41,7 @@ class UsersController extends Controller
             'name'=>'string|required|max:30',
             'email'=>'string|required|unique:users',
             'password'=>'string|required',
-            'role'=>'required|in:admin,user',
+            'role'=>'required|in:admin,user,staff',
             'status'=>'required|in:active,inactive',
             'photo'=>'nullable|string',
         ]);
@@ -98,14 +98,14 @@ class UsersController extends Controller
         [
             'name'=>'string|required|max:30',
             'email'=>'string|required',
-            'role'=>'required|in:admin,user',
+            'role'=>'required|in:admin,user,staff',
             'status'=>'required|in:active,inactive',
             'photo'=>'nullable|string',
         ]);
         // dd($request->all());
         $data=$request->all();
         // dd($data);
-        
+        // dd($data);
         $status=$user->fill($data)->save();
         if($status){
             request()->session()->flash('success','Successfully updated');

@@ -47,14 +47,14 @@
           @enderror
         </div>
         @php 
-        $roles=DB::table('users')->select('role')->get();
+        $roles=['admin' => 'Admin','user' => 'User','staff' =>'Staff']
         @endphp
         <div class="form-group">
             <label for="role" class="col-form-label">Role</label>
             <select name="role" class="form-control">
                 <option value="">-----Select Role-----</option>
-                @foreach($roles as $role)
-                    <option value="{{$role->role}}">{{$role->role}}</option>
+                @foreach($roles as $key => $role)
+                    <option value="{{$key}}">{{$role}}</option>
                 @endforeach
             </select>
           @error('role')
