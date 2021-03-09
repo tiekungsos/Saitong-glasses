@@ -130,7 +130,7 @@ class OrderController extends Controller
         $status=$order->save();
         if($order)
         // dd($order->id);
-        $users=User::where('role','admin')->first();
+        $users=User::where('role','admin')->orWhere('role','staff')->first();
         $details=[
             'title'=>'New order created',
             'actionURL'=>route('order.show',$order->id),

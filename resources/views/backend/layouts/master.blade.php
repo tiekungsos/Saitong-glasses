@@ -8,9 +8,13 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
 
-    <!-- Sidebar -->
-    @include('backend.layouts.sidebar')
-    <!-- End of Sidebar -->
+    @if(Auth::user()->role  == "staff")
+      @include('backend.layouts.sidebarStaff')
+    @else
+     <!-- Sidebar -->
+     @include('backend.layouts.sidebar')
+     <!-- End of Sidebar -->
+    @endif
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">

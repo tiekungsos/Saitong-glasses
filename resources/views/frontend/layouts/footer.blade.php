@@ -9,7 +9,7 @@
 						<!-- Single Widget -->
 						<div class="single-footer about">
 							<div class="logo">
-								<a href="index.html" style="font-size:40px">
+								<a href="https://www.facebook.com/senthongoptic" style="font-size:40px">
 									เส้นทองการแว่น
 								</a>
 							</div>
