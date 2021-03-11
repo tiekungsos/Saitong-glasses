@@ -386,7 +386,7 @@ class FrontendController extends Controller
             'password'=>'required|min:6|confirmed',
         ]);
         $data=$request->all();
-        // dd($data);
+
         $check=$this->create($data);
         Session::put('user',$data['email']);
         if($check){
@@ -403,7 +403,11 @@ class FrontendController extends Controller
             'name'=>$data['name'],
             'email'=>$data['email'],
             'password'=>Hash::make($data['password']),
-            'status'=>'active'
+            'status'=>'active',
+            'address1'=>$data['address1'],
+            'phone'=>$data['phone'],
+            'country'=>$data['country'],
+            'post_code'=>$data['post_code']
             ]);
     }
     // Reset password

@@ -106,6 +106,19 @@ class Helper {
             return 0;
         }
     }
+
+    public static function addressDataUser($user_id=''){
+        if(Auth::check()){
+            // dd();
+            // if($user_id=="") $user_id=auth()->user()->id;
+            return auth()->user();
+        }
+        else{
+            return 0;
+        }
+    }
+
+
     // Total amount cart
     public static function totalCartPrice($user_id=''){
         if(Auth::check()){

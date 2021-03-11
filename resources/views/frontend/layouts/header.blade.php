@@ -144,8 +144,8 @@
                             @auth
                                 <div class="shopping-item">
                                     <div class="dropdown-cart-header">
-                                        <span>{{count(Helper::getAllProductFromCart())}} Items</span>
-                                        <a href="{{route('cart')}}">View Cart</a>
+                                        <span>{{count(Helper::getAllProductFromCart())}} ชิ้น</span>
+                                        <a href="{{route('cart')}}">ดูตระกร้า</a>
                                     </div>
                                     <ul class="shopping-list">
                                         {{-- {{Helper::getAllProductFromCart()}} --}}
@@ -163,10 +163,10 @@
                                     </ul>
                                     <div class="bottom">
                                         <div class="total">
-                                            <span>Total</span>
+                                            <span>ราคารวม</span>
                                             <span class="total-amount">฿{{number_format(Helper::totalCartPrice(),2)}}</span>
                                         </div>
-                                        <a href="{{route('checkout')}}" class="btn animate">Checkout</a>
+                                        <a href="{{route('checkout')}}" class="btn animate">เช็คเอาท์</a>
                                     </div>
                                 </div>
                             @endauth
