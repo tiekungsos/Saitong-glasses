@@ -216,8 +216,8 @@
                                                     <td>{{ $productData->product->title }}</td>
                                                     <td>{{ $productData->product->slug }}</td>
                                                     <td> {{ $productData->quantity }}</td>
-                                                    <td>{{ $productData->price }}</td>
-                                                    <td> {{ $productData->amount }}</td>
+                                                    <td>฿{{number_format($productData->price,2)}}</td>
+                                                    <td>฿{{number_format($productData->amount,2)}} </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
